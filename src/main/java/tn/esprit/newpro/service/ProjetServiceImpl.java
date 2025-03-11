@@ -65,5 +65,34 @@ public class ProjetServiceImpl implements IProjetService {
         equipe.getProjets().add(projet);
         equipeRepository.save(equipe);
     }
+    public Projet addProjetAndAssignProjetToProjetDetail(Projet projet, Long projetDetailId) {
+        ProjetDetails projetDetail = projetDetailsRepository.findById(projetDetailId).get();
+        // on setle fils dans le parent :
+        projet.setProjetdetails(projetDetail);
+        return projetRepository.save(projet);
+    }
+    public Projet DesaffecterProjetDetailFromProjet(Long projetId) {
+        Projet projet = projetRepository.findById(projetId).get();
+        projet.setProjetdetails(null);
+        return projetRepository.save(projet);
+    }
+    public void desaffecterProjetFromEquipe(Long projetId, Long equipeId) {
+        Projet projet = projetRepository.findById(projetId).get();
+        Equipe equipe = equipeRepository.findById(equipeId).get();
+        // on enlève le fils du parent :
+        equipe.getProjets().remove(projet);
+        equipeRepository.save(equipe);
+    }
+    @Override
+    public void assignProjetsToEquipe(List<Long> projetIds, Long equipeId) {
+        Equipe equipe = equipeRepository.findById(equipeId).orElseThrow(() -> new RuntimeException("Equipe non trouvée"));
+
+        List<Projet> projets = projetRepository.findAllById(projetIds);
+
+        equipe.getProjets().addAll(projets);
+        equipeRepository.save(equipe);
+    }
+
+
 
 }

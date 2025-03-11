@@ -67,5 +67,25 @@ public class ProjetRestController {
                                             @PathVariable("equipe-id") Long equipeId) {
         projetService.assignProjetToEquipe(projtId, equipeId);
     }
+    @PostMapping("/ajouter-projet-et-afffecter-projet-details-to-projet/{projet-detail-id}")
+    public Projet addProjetandAssignProjetDetail(@RequestBody Projet p , @PathVariable("projet-details_id") Long projetDetailsId) {
+        Projet projet = projetService.addProjetAndAssignProjetToProjetDetail(p,projetDetailsId);
+        return projet;
+    }
+
+    @PutMapping("/desaffecter-projet-details/{projet-id}")
+    public void desaffecgterProjetDeatilsdromproj(@PathVariable("projet-id") Long projtId) {
+        projetService.DesaffecterProjetDetailFromProjet(projtId);
+    }
+    @PutMapping("/desaffecter-projet-de-equipe/{projet-id}/{equipe-id}")
+    public void desaffecgterEqupeProjet(@PathVariable("projet-id") Long projtId , @PathVariable("equipe-id") Long equipeId) {
+        projetService.desaffecterProjetFromEquipe( projtId,  equipeId);
+    }
+    @PutMapping("/affecter-plusieurs-projet-a-equipe/{projet-ids}/{equipe-id}")
+    public void assignProjetsToEquipe(@PathVariable("projet-ids") List<Long> projetIds,
+                                     @PathVariable("equipe-id") Long equipeId) {
+        projetService.assignProjetsToEquipe(projetIds, equipeId);
+    }
+
 
 }

@@ -26,13 +26,7 @@ public class Projet {
         this.projetdetails = projetdetails;
     }
 
-    public Set<Equipe> getEquipes() {
-        return equipes;
-    }
 
-    public void setEquipes(Set<Equipe> equipes) {
-        this.equipes = equipes;
-    }
 
     @OneToOne(cascade = CascadeType.ALL)
     public ProjetDetails projetdetails;
